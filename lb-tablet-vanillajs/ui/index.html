@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>LB Tablet | Vanilla JS Custom App Template</title>
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="colors.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div id="tablet-wrapper">
+            <div class="app-wrapper">
+                <div class="header">
+                    <div class="title">Custom App Template</div>
+                    <div class="subtitle">Vanilla JS</div>
+                    <a class="subtitle" id="direction">N</a>
+                </div>
+                <div class="button-wrapper">
+                    <button id="popup">Popup Menu</button>
+                    <button id="contextmenu">Context Menu</button>
+                    <button id="photo">Gallery</button>
+                    <button id="indicator">Hide Indicator</button>
+                    <button id="color">Color picker</button>
+
+                    <!-- <input id="notificationText" type="text" placeholder="Notification text" /> -->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            if (!window.invokeNative) {
+                const script = document.createElement("script")
+                script.src = "dev.js"
+                document.body.appendChild(script)
+            }
+
+            if (!globalThis.GetParentResourceName) document.body.style.visibility = "visible"
+
+            window.addEventListener("message", (event) => {
+                if (event.data === "componentsLoaded") {
+                    const script = document.createElement("script")
+                    script.src = "script.js"
+                    document.body.appendChild(script)
+                }
+            })
+        </script>
+    </body>
+</html>
