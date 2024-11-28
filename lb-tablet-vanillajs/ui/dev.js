@@ -5,16 +5,12 @@ const statusBar = document.createElement("div")
 indicator.id = "indicator"
 statusBar.id = "status-bar"
 
-const invertBackground = {
-    // backdropFilter: "grayscale(1) invert(1) contrast(100)"
-}
-
 Object.assign(tabletWrapper.style, {
     aspectRatio: "4 / 3",
     border: "0.5em solid black",
     borderRadius: "1.875rem",
     boxShadow: "0 0 0.1em 0.2em purple, 0 0 0 0.3em hsl(254deg, 30%, 85%)",
-    overflow: "scroll"
+    overflow: "auto"
 })
 
 Object.assign(indicator.style, {
@@ -34,14 +30,13 @@ Object.assign(statusBar.style, {
     top: "0",
     left: "0",
     width: "100%",
-    height: "2.75em",
+    height: "2em",
     display: "flex",
     alignItems: "end",
     justifyContent: "flex-start",
     paddingLeft: "3em",
     paddingRight: "3em",
     fontSize: "0.9em"
-    // backgroundColor: "green"
 })
 
 const time = document.createElement("div")
@@ -61,9 +56,6 @@ const right = document.createElement("div")
 right.className = "right"
 right.innerText = "100%"
 right.style.marginLeft = "auto"
-
-Object.assign(time.style, invertBackground)
-Object.assign(right.style, invertBackground)
 
 statusBar.appendChild(time)
 statusBar.appendChild(right)
