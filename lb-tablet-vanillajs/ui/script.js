@@ -1,4 +1,5 @@
 let indicatorVisible = true
+let backgroundColor = "#ffffff"
 
 const actions = [
     {
@@ -11,7 +12,7 @@ const actions = [
                     {
                         title: "Confirm",
                         cb: () => {
-                            console.log("!")
+                            console.log("Confirm")
                         }
                     },
                     {
@@ -53,10 +54,7 @@ const actions = [
         action: () => {
             globalThis.setGallery({
                 onSelect: (data) => {
-                    globalThis.setFullScreenImage({
-                        image: data.src,
-                        display: true
-                    })
+                    globalThis.setFullScreenImage(data.src)
                 }
             })
         }
@@ -73,8 +71,12 @@ const actions = [
         id: "color",
         action: () => {
             globalThis.setColorPicker({
+                defaultColor: backgroundColor,
                 onSelect: (color) => {
-                    document.body.style.backgroundColor = color
+                    document.querySelector("#tablet-wrapper").style.backgroundColor = color
+                },
+                onClose: (color) => {
+                    backgroundColor = color
                 }
             })
         }
@@ -84,3 +86,7 @@ const actions = [
 for (const action of actions) {
     document.querySelector(`#${action.id}`).addEventListener("click", action.action)
 }
+
+globalThis.useNuiEvent("updateDirection", (direction) => {
+    document.querySelector("#direction").innerText = direction
+})

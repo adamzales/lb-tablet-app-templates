@@ -2,6 +2,13 @@ const tabletWrapper = document.querySelector("#tablet-wrapper")
 const indicator = document.createElement("div")
 const statusBar = document.createElement("div")
 
+indicator.id = "indicator"
+statusBar.id = "status-bar"
+
+const invertBackground = {
+    // backdropFilter: "grayscale(1) invert(1) contrast(100)"
+}
+
 Object.assign(tabletWrapper.style, {
     aspectRatio: "4 / 3",
     border: "0.5em solid black",
@@ -16,7 +23,8 @@ Object.assign(indicator.style, {
     left: "0",
     width: "11rem",
     height: "0.28em",
-    backgroundColor: "black",
+    background: "transparent",
+    backdropFilter: "grayscale(1) invert(1) contrast(100)",
     borderRadius: "100px",
     cursor: "pointer"
 })
@@ -39,10 +47,13 @@ Object.assign(statusBar.style, {
 const time = document.createElement("div")
 
 time.className = "time"
-time.innerText = new Date().getHours() + ":" + new Date().getMinutes()
+
+const date = new Date()
+time.innerText = date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0")
 
 setInterval(() => {
-    time.innerText = new Date().getHours() + ":" + new Date().getMinutes()
+    const date = new Date()
+    time.innerText = date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0")
 }, 1000)
 
 const right = document.createElement("div")
@@ -50,6 +61,9 @@ const right = document.createElement("div")
 right.className = "right"
 right.innerText = "100%"
 right.style.marginLeft = "auto"
+
+Object.assign(time.style, invertBackground)
+Object.assign(right.style, invertBackground)
 
 statusBar.appendChild(time)
 statusBar.appendChild(right)
@@ -87,3 +101,5 @@ const calculateAspectRatio = () => {
 window.addEventListener("resize", calculateAspectRatio)
 
 calculateAspectRatio()
+
+// console.log(document.elementsFromPoint(850, 1227)[1])

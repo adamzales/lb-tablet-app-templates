@@ -28,7 +28,7 @@
                     <button id="indicator">Hide Indicator</button>
                     <button id="color">Color picker</button>
 
-                    <!-- <input id="notificationText" type="text" placeholder="Notification text" /> -->
+                    <input type="text" placeholder="Input" />
                 </div>
             </div>
         </div>
@@ -40,7 +40,9 @@
                 document.body.appendChild(script)
             }
 
-            if (!globalThis.GetParentResourceName) document.body.style.visibility = "visible"
+            if (!globalThis.GetParentResourceName) {
+                document.body.style.visibility = "visible"
+            }
 
             window.addEventListener("message", (event) => {
                 if (event.data === "componentsLoaded") {

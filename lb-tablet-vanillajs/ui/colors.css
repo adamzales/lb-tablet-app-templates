@@ -1,15 +1,23 @@
 :root {
-    --background-primary: #f5f5f5;
-    --background-highlight: rgb(220, 220, 220);
+    --background-primary: hsl(0, 0%, 98%);
+    --background-secondary: hsl(0, 0%, 90%);
+    --background-tertiary: hsl(0, 0%, 75%);
 
-    --text-primary: #000000;
-    --text-secondary: #8e8e93;
+    --text-primary: hsl(0, 0%, 4%);
+    --text-secondary: hsl(0, 0%, 40%);
+
+    --scrollbar: hsl(0, 0%, 70%);
+    --scrollbar-hover: hsl(0, 0%, 55%);
 }
 
 [data-theme='dark'] {
-    --background-primary: #000000;
-    --background-highlight: rgb(20, 20, 20);
+    --background-primary: hsl(0, 0%, 0%);
+    --background-secondary: hsl(0, 0%, 10%);
+    --background-tertiary: hsl(0, 0%, 25%);
 
-    --text-primary: #f2f2f7;
-    --text-secondary: #6f6f6f;
+    --text-primary: hsl(0, 0%, 96%);
+    --text-secondary: hsl(0, 0%, 60%);
+
+    --scrollbar: hsl(0, 0%, 30%);
+    --scrollbar-hover: hsl(0, 0%, 45%);
 }
