@@ -4,4 +4,4 @@ This repository contains templates for [LB Tablet](https://store.lbscripts.com/)
 
 ## Templates
 
--   [Vanilla JS app template](<(./lb-tablet-vanillajs)>)
+-   [Vanilla JS app template](./lb-tablet-vanillajs)
