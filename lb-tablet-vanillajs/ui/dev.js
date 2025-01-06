@@ -1,97 +1,49 @@
-const tabletWrapper = document.querySelector("#tablet-wrapper")
-const indicator = document.createElement("div")
-const statusBar = document.createElement("div")
+// You can ignore this file. All it does is make the UI work on your browser.
+window.addEventListener('load', () => {
+    const tabletWrapper = document.getElementById('tablet-wrapper');
+    const app = tabletWrapper.querySelector('.app');
 
-indicator.id = "indicator"
-statusBar.id = "status-bar"
-
-Object.assign(tabletWrapper.style, {
-    aspectRatio: "4 / 3",
-    border: "0.5em solid black",
-    borderRadius: "1.875rem",
-    boxShadow: "0 0 0.1em 0.2em purple, 0 0 0 0.3em hsl(254deg, 30%, 85%)",
-    overflow: "auto"
-})
-
-Object.assign(indicator.style, {
-    position: "absolute",
-    top: "0",
-    left: "0",
-    width: "11rem",
-    height: "0.28em",
-    background: "transparent",
-    backdropFilter: "grayscale(1) invert(1) contrast(100)",
-    borderRadius: "100px",
-    cursor: "pointer"
-})
-
-Object.assign(statusBar.style, {
-    position: "absolute",
-    top: "0",
-    left: "0",
-    width: "100%",
-    height: "2em",
-    display: "flex",
-    alignItems: "end",
-    justifyContent: "flex-start",
-    paddingLeft: "3em",
-    paddingRight: "3em",
-    fontSize: "0.9em"
-})
-
-const time = document.createElement("div")
-
-time.className = "time"
-
-const date = new Date()
-time.innerText = date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0")
-
-setInterval(() => {
-    const date = new Date()
-    time.innerText = date.getHours().toString().padStart(2, "0") + ":" + date.getMinutes().toString().padStart(2, "0")
-}, 1000)
-
-const right = document.createElement("div")
-
-right.className = "right"
-right.innerText = "100%"
-right.style.marginLeft = "auto"
-
-statusBar.appendChild(time)
-statusBar.appendChild(right)
-
-tabletWrapper.appendChild(indicator)
-tabletWrapper.appendChild(statusBar)
-
-const calculateAspectRatio = () => {
-    const aspectRatio = window.innerWidth / window.innerHeight
-
-    if (aspectRatio < 4 / 3) {
-        tabletWrapper.style.width = "99.5vw"
-        tabletWrapper.style.height = "auto"
-        document.documentElement.style.fontSize = "1.512vw"
-    } else {
-        tabletWrapper.style.width = "auto"
-        tabletWrapper.style.height = "99vh"
-        document.documentElement.style.fontSize = "2vh"
+    if (window.invokeNative) {
+        tabletWrapper.parentNode.insertBefore(app, tabletWrapper);
+        tabletWrapper.parentNode.removeChild(tabletWrapper);
+        return;
     }
 
-    const boundingRect = tabletWrapper.getBoundingClientRect()
-    const indicatorBoundingRect = indicator.getBoundingClientRect()
-    const statusBarBoundingRect = statusBar.getBoundingClientRect()
+    document.getElementById('tablet-wrapper').style.display = 'block';
+    document.body.style.visibility = 'visible';
 
-    indicator.style.top = `${boundingRect.top + boundingRect.height - indicatorBoundingRect.height * 5}px`
-    indicator.style.left = `${boundingRect.left + boundingRect.width / 2 - indicatorBoundingRect.width / 2}px`
+    // Create the Frame element
+    const createFrame = (children) => {
+        const frame = document.createElement('div');
+        frame.classList.add('tablet-frame');
 
-    statusBar.style.top = `calc(${boundingRect.top + statusBarBoundingRect.height}px - ${statusBar.style.height} + ${
-        tabletWrapper.style.borderWidth
-    })`
-    statusBar.style.left = `${boundingRect.left}px`
-    statusBar.style.width = `${boundingRect.width}px`
-}
+        // Create the tablet content container and append children to it
+        const tabletContent = document.createElement('div');
+        tabletContent.classList.add('tablet-content');
+        tabletContent.appendChild(children);
 
-window.addEventListener("resize", calculateAspectRatio)
+        const tabletIndicator = document.createElement('div');
+        tabletIndicator.classList.add('tablet-indicator');
 
-calculateAspectRatio()
+        // Append the content to the frame
+        frame.appendChild(tabletContent);
+        frame.appendChild(tabletIndicator);
 
-// console.log(document.elementsFromPoint(850, 1227)[1])
+        return frame;
+    };
+
+    const devWrapper = document.createElement('div');
+    devWrapper.classList.add('dev-wrapper');
+
+    const frame = createFrame(app);
+    devWrapper.appendChild(frame);
+    devWrapper.style.display = 'block';
+
+    tabletWrapper.parentNode.insertBefore(devWrapper, tabletWrapper);
+    tabletWrapper.parentNode.removeChild(tabletWrapper);
+
+    const center = () => (document.getElementById('tablet-wrapper').style.scale = window.innerWidth / 1920);
+    center();
+
+    window.addEventListener('resize', center);
+});

@@ -33,15 +33,17 @@ end
 local function AddApp()
 	local success, reason = exports["lb-tablet"]:AddCustomApp({
 		identifier = resourceName,
-		name = "Vanilla JS Template",
+		name = "React TS Template",
 		defaultApp = true,
-		icon = "/ui/assets/icon.webp",
-		ui = "ui/index.html",
+        -- ui = "ui/dist/index.html",
+		ui = "http://localhost:3000",
+
+		icon = "/ui/dist/icon.webp",
 		removable = false,
 
 		images = {
-			"https://cfx-nui-" .. resourceName .. "/ui/assets/screenshot-dark.webp",
-			"https://cfx-nui-" .. resourceName .. "/ui/assets/screenshot-light.webp"
+			"https://cfx-nui-" .. resourceName .. "/ui/dist/screenshot-dark.webp",
+			"https://cfx-nui-" .. resourceName .. "/ui/dist/screenshot-light.webp"
 		},
 
 		onInstall = function()

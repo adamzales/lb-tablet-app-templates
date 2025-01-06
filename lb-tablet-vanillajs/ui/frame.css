@@ -1,0 +1,55 @@
+.tablet-frame {
+    position: absolute;
+    z-index: 1;
+
+    width: 92%;
+    height: 98%;
+
+    border-radius: 1.875rem;
+    background-color: black;
+    box-shadow: 0 0 0.1em 0.25em #050506, 0 0 0 0.4em hsl(254, 30%, 85%);
+
+    z-index: 2;
+}
+
+.tablet-content {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    border-radius: 1.875rem;
+}
+
+.tablet-indicator {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0.2rem;
+    margin: auto;
+    width: 15rem;
+    height: 0.625rem;
+
+    z-index: 999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 1rem 0;
+    padding-bottom: 0.5rem;
+
+    background: transparent;
+    backdrop-filter: 'grayscale(1) invert(1) contrast(100)';
+
+    &:hover {
+        cursor: pointer;
+        transition: 0.5s;
+
+        margin-bottom: 0.1rem;
+    }
+}

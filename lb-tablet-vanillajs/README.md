@@ -5,10 +5,10 @@ You can open the index.html file in your browser while editing the UI. Ensuring 
 You need to wait for the components to load before you can use them. You can listen for the `componentsLoaded` message to know when the components are ready.
 
 ```js
-window.addEventListener("message", (e) => {
-    if (e.data !== "componentsLoaded") return
+window.addEventListener('message', (e) => {
+    if (e.data !== 'componentsLoaded') return;
     // Here you can access the components
-})
+});
 ```
 
 ## Developing the app
@@ -19,4 +19,4 @@ To use, follow these steps:
 
 1. Install the extension
 2. Right click on the ui/index.html file, and click "Open with Live Server"
-3. Update `ui` in the client.lua (line 10) to `http://localhost:5500/ui/index.html`
+3. Update `ui` in the client.lua (line 39) to `http://localhost:5500/ui/index.html`
