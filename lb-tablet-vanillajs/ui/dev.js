@@ -22,12 +22,26 @@ window.addEventListener('load', () => {
         tabletContent.classList.add('tablet-content');
         tabletContent.appendChild(children);
 
+        // Create the tablet indicator
         const tabletIndicator = document.createElement('div');
         tabletIndicator.classList.add('tablet-indicator');
+
+        // Create the time
+        const time = document.createElement('div');
+        time.classList.add('tablet-time');
+
+        const date = new Date();
+        time.innerText = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
+
+        setInterval(() => {
+            const date = new Date();
+            time.innerText = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
+        }, 1000);
 
         // Append the content to the frame
         frame.appendChild(tabletContent);
         frame.appendChild(tabletIndicator);
+        frame.appendChild(time);
 
         return frame;
     };
