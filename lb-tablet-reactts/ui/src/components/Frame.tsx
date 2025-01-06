@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Frame.css';
 
-export default function Frame({ children }: any) {
+export default function Frame({ children }: React.Node) {
     const [time, setTime] = useState('00:00');
 
     useEffect(() => {
