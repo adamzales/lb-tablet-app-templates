@@ -5,7 +5,9 @@ title "LB Tablet - App Template | React TS"
 description "A template for creating apps for the LB Tablet."
 author "Breze & Loaf"
 
-client_script "client.lua"
+shared_script "config.lua"
+client_script "client/**.lua"
+server_script "server/**.lua"
 
 files {
     "ui/dist/**/*",

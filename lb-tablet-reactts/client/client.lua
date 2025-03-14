@@ -25,21 +25,25 @@ local function SendDirection()
 			oldYaw = yaw
 			direction = yaw .. "° " .. directions[math.floor((yaw + 22.5) / 45.0) % 8 + 1]
 
-			exports["lb-tablet"]:SendCustomAppMessage(resourceName, "updateDirection", direction)
+			SendAppMessage("updateDirection", direction)
 		end
 	end
 end
 
-local function AddApp()
-	local success, reason = exports["lb-tablet"]:AddCustomApp({
-		identifier = resourceName,
-		name = "React TS Template",
-		defaultApp = true,
-        -- ui = "ui/dist/index.html",
-		ui = "http://localhost:3000",
+local url = GetResourceMetadata(GetCurrentResourceName(), "ui_page", 0)
 
-		icon = "/ui/dist/icon.webp",
-		removable = false,
+local function AddApp()
+	Wait(500) -- Wait for the AddCustomApp export to be registered
+
+	local success, reason = exports["lb-tablet"]:AddCustomApp({
+		identifier = Config.Identifier,
+		name = Config.Name,
+		description = Config.Description,
+		defaultApp = Config.DefaultApp,
+		developer = Config.Developer,
+
+		ui = url,
+		icon = url:find("http") and url .. "/public/icon.svg" or "/ui/dist/icon.svg",
 
 		images = {
 			"https://cfx-nui-" .. resourceName .. "/ui/dist/screenshot-dark.webp",
@@ -49,14 +53,17 @@ local function AddApp()
 		onInstall = function()
 			print("install")
 		end,
+
 		onUninstall = function()
 			print("uninstall")
 		end,
+
 		onOpen = function()
 			print("open")
 			appOpen = true
 			SendDirection()
 		end,
+
 		onClose = function()
 			print("close")
 			appOpen = false
@@ -70,11 +77,19 @@ local function AddApp()
 	end
 end
 
+RegisterNUICallback("notification", function(data, cb)
+	if data.type == "gta" then
+		BeginTextCommandThefeedPost("STRING")
+		AddTextComponentSubstringPlayerName(data.message)
+		EndTextCommandThefeedPostTicker(false, false)
+	else
+		TriggerServerEvent("lb-tablet-reactts:notification", data.message)
+	end
+end)
+
 AddApp()
 
 AddEventHandler("onResourceStart", function(resource)
-	Wait(500)
-
 	if resource == "lb-tablet" then
 		AddApp()
 	end
