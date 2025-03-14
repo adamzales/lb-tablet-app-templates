@@ -1,40 +1,40 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import Frame from './components/Frame';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import Frame from './components/Frame'
 
-import './App.css';
+import './App.css'
 
-const devMode = !window?.['invokeNative'];
+const devMode = !window?.['invokeNative']
 
 const App = () => {
-    const [theme, setTheme] = useState('light');
-    const [direction, setDirection] = useState('N');
+    const [theme, setTheme] = useState('light')
+    const [direction, setDirection] = useState('N')
 
-    const [indicatorVisible, setIndicatorVisible] = useState(true);
-    const [notificationText, setNotificationText] = useState('Notification text');
-    const appDiv = useRef(null);
+    const [indicatorVisible, setIndicatorVisible] = useState(true)
+    const [notificationText, setNotificationText] = useState('Notification text')
+    const appDiv = useRef(null)
 
     useEffect(() => {
         if (devMode) {
-            document.getElementsByTagName('html')[0].style.visibility = 'visible';
-            document.getElementsByTagName('body')[0].style.visibility = 'visible';
-            return;
+            document.getElementsByTagName('html')[0].style.visibility = 'visible'
+            document.getElementsByTagName('body')[0].style.visibility = 'visible'
+            return
         } else {
-            setTheme(globalThis.settings?.display?.theme || 'light');
+            setTheme(globalThis.settings?.display?.theme || 'light')
 
-            globalThis.onSettingsChange((settings: any) => setTheme(settings.display.theme));
+            globalThis.onSettingsChange((settings: any) => setTheme(settings.display.theme))
             if (!globalThis.GetParentResourceName) {
-                document.getElementsByTagName('body')[0].style.visibility = 'visible';
+                document.getElementsByTagName('body')[0].style.visibility = 'visible'
             }
         }
 
-        globalThis.useNuiEvent('updateDirection', (direction: string) => {
-            setDirection(direction);
-        });
-    }, []);
+        globalThis.onNuiEvent<string>('updateDirection', (direction) => {
+            setDirection(direction)
+        })
+    }, [])
 
     useEffect(() => {
-        if (notificationText === '') setNotificationText('Notification text');
-    }, [notificationText]);
+        if (notificationText === '') setNotificationText('Notification text')
+    }, [notificationText])
 
     return (
         <AppProvider>
@@ -62,18 +62,18 @@ const App = () => {
                                             title: 'Cancel',
                                             color: 'red',
                                             cb: () => {
-                                                console.log('Cancel');
+                                                console.log('Cancel')
                                             }
                                         },
                                         {
                                             title: 'Confirm',
                                             color: 'blue',
                                             cb: () => {
-                                                console.log('Confirm');
+                                                console.log('Confirm')
                                             }
                                         }
                                     ]
-                                });
+                                })
                             }}
                         >
                             Popup Menu
@@ -81,25 +81,31 @@ const App = () => {
                         <button
                             id='context'
                             onClick={() => {
-                                globalThis.components?.setContextMenu({
+                                globalThis?.setContextMenu({
                                     title: 'Context menu',
                                     buttons: [
                                         {
-                                            title: 'Phone Notification',
+                                            title: 'Tablet Notification',
                                             color: 'blue',
                                             cb: () => {
-                                                globalThis.sendNotification({ title: notificationText });
+                                                globalThis.fetchNui('notification', {
+                                                    type: 'tablet',
+                                                    message: notificationText
+                                                })
                                             }
                                         },
                                         {
                                             title: 'GTA Notification',
                                             color: 'red',
                                             cb: () => {
-                                                globalThis.fetchNui('drawNotification', { message: notificationText });
+                                                globalThis.fetchNui('notification', {
+                                                    type: 'gta',
+                                                    message: notificationText
+                                                })
                                             }
                                         }
                                     ]
-                                });
+                                })
                             }}
                         >
                             Context menu
@@ -108,10 +114,10 @@ const App = () => {
                         <button
                             id='gallery'
                             onClick={() => {
-                                globalThis.components?.setGallery({
+                                globalThis?.setGallery({
                                     includeVideos: true,
                                     includeImages: true,
-                                    cb: (data: { src: string; isVideo: boolean; timestamp: number }) => {
+                                    onSelect: (data) => {
                                         globalThis.setPopUp({
                                             title: 'Selected media',
                                             attachment: data,
@@ -120,9 +126,9 @@ const App = () => {
                                                     title: 'OK'
                                                 }
                                             ]
-                                        });
+                                        })
                                     }
-                                });
+                                })
                             }}
                         >
                             Gallery Selector
@@ -130,8 +136,8 @@ const App = () => {
                         <button
                             id='indicator'
                             onClick={() => {
-                                globalThis.components?.setIndicatorVisible(!indicatorVisible);
-                                setIndicatorVisible(!indicatorVisible);
+                                globalThis?.setIndicatorVisible(!indicatorVisible)
+                                setIndicatorVisible(!indicatorVisible)
                             }}
                         >
                             {indicatorVisible ? 'Hide Indicator' : 'Show Indicator'}
@@ -139,29 +145,35 @@ const App = () => {
                         <button
                             id='colorpicker'
                             onClick={() => {
-                                globalThis.components?.setColorPicker((color: string) => {
-                                    globalThis.setPopUp({
-                                        title: 'Selected color',
-                                        description: color,
-                                        buttons: [
-                                            {
-                                                title: 'OK'
-                                            }
-                                        ]
-                                    });
-                                });
+                                globalThis?.setColorPicker({
+                                    onSelect(color) {},
+                                    onClose(color) {
+                                        globalThis.setPopUp({
+                                            title: 'Selected color',
+                                            description: color,
+                                            buttons: [
+                                                {
+                                                    title: 'OK'
+                                                }
+                                            ]
+                                        })
+                                    }
+                                })
                             }}
                         >
                             Color Picker
                         </button>
 
-                        <input placeholder='Notification text' onChange={(e: ChangeEvent<HTMLInputElement>) => setNotificationText(e.target.value)}></input>
+                        <input
+                            placeholder='Notification text'
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => setNotificationText(e.target.value)}
+                        ></input>
                     </div>
                 </div>
             </div>
         </AppProvider>
-    );
-};
+    )
+}
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
     if (devMode) {
@@ -169,10 +181,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
             <div className='dev-wrapper'>
                 <Frame>{children}</Frame>
             </div>
-        );
+        )
     } else {
-        return <>{children}</>;
+        return <>{children}</>
     }
-};
+}
 
-export default App;
+export default App
