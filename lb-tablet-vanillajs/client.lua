@@ -33,7 +33,7 @@ end
 local function AddApp()
 	local success, reason = exports["lb-tablet"]:AddCustomApp({
 		identifier = resourceName,
-		name = "Vanilla JS Template",
+		name = "Dream Market",
 		defaultApp = true,
 		icon = "/ui/assets/icon.webp",
 		ui = "ui/index.html",

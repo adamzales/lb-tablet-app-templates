@@ -3,84 +3,22 @@ let backgroundColor = "#ffffff"
 
 const actions = [
     {
-        id: "popup",
+        id: "gun",
         action: () => {
-            globalThis.setPopUp({
-                title: "Title",
-                description: "Description",
-                buttons: [
-                    {
-                        title: "Confirm",
-                        cb: () => {
-                            console.log("Confirm")
-                        }
-                    },
-                    {
-                        title: "Cancel",
-                        color: "red",
-                        cb: () => {
-                            console.log("Cancel")
-                        }
-                    }
-                ]
-            })
+            
         }
     },
     {
-        id: "contextmenu",
+        id: "drug",
         action: () => {
-            globalThis.setContextMenu({
-                title: "Menu Title",
-                buttons: [
-                    {
-                        title: "Item 1",
-                        cb: () => {
-                            console.log("Item 1")
-                        }
-                    },
-                    {
-                        title: "Item 2",
-                        color: "red",
-                        cb: () => {
-                            console.log("Item 2")
-                        }
-                    }
-                ]
-            })
+            
+        }
+    },{
+        id: "heist",
+        action: () => {
+            document.body.innerHTML = "<h1>Nový obsah stránky</h1><p>Toto je úplně nová stránka.</p>";
         }
     },
-    {
-        id: "photo",
-        action: () => {
-            globalThis.setGallery({
-                onSelect: (data) => {
-                    globalThis.setFullScreenImage(data.src)
-                }
-            })
-        }
-    },
-    {
-        id: "indicator",
-        action: (e) => {
-            indicatorVisible = !indicatorVisible
-            globalThis.setIndicatorVisible(indicatorVisible)
-            e.target.innerText = indicatorVisible ? "Hide Indicator" : "Show Indicator"
-        }
-    },
-    {
-        id: "color",
-        action: () => {
-            globalThis.setColorPicker({
-                defaultColor: backgroundColor,
-                onSelect: (color) => {
-                    document.querySelector("#tablet-wrapper").style.backgroundColor = color
-                },
-                onClose: (color) => {
-                    backgroundColor = color
-                }
-            })
-        }
-    }
 ]
 
 for (const action of actions) {
